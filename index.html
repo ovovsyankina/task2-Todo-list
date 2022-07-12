@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Todo List</title>
+    <link rel="stylesheet" href="./index.css" />
+  </head>
+  <body>
+    <div class="head">TODO LIST</div>
+    <div class="inputField">
+      <input type="text" class="input_text" />
+      <ul class="list_items"></ul>
+    </div>
+    <div class="count"></div>
+    <div class="filter">
+      <button class="all_filter" onclick="allElements()">All</button>
+      <button class="active_filter" onclick="activeElements()">Active</button>
+      <button class="completed_filter" onclick="completedElements()">
+        Completed
+      </button>
+    </div>
+  </body>
+  <script src="./index.js"></script>
+</html>
