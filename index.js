@@ -13,7 +13,8 @@ function createElement() {
     arr[i].id = id;
     todoElem += `<li class="todo"  id="todo_${id}" ><input type="checkbox" class="todo_checkbox" id="todoCheck_${id}" onchange="checkElement(${id})" ${
       todo.complete ? "checked" : ""
-    }><div class="textTask"  id="todoText_${id}">${todo.text}</div> </li>`;
+    }><div class="textTask"  id="todoText_${id}">${todo.text}</div> 
+    <button class="todoDelite" onclick="deleteElement(${id})">X</button></li>`;
     todoItems.innerHTML = todoElem;
   });
   count.innerHTML = counts() + "  items left";
@@ -102,4 +103,12 @@ function counts() {
     }
   });
   return index;
+}
+function deleteElement(id) {
+  for (let i = arr.length; i--; ) {
+    if (arr[i].id === id) {
+      arr.splice(i, 1);
+    }
+  }
+  document.querySelector(`#todo_${id}`).remove();
 }
