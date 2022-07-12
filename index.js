@@ -18,7 +18,7 @@ function createElement() {
     todoItems.innerHTML = todoElem;
   });
   count.innerHTML = counts() + "  items left";
-  // console.log(arr);
+  console.log(arr);
 }
 
 document.querySelector("input").addEventListener("keydown", function (e) {
@@ -54,7 +54,7 @@ function checkElement(id) {
       }
     });
   }
-  console.log(arr);
+
   createElement();
 }
 function allElements() {
@@ -111,4 +111,16 @@ function deleteElement(id) {
     }
   }
   document.querySelector(`#todo_${id}`).remove();
+}
+function allCompletedElements() {
+  if (arr.some((element) => element.complete === false)) {
+    arr.forEach((todo) => {
+      todo.complete = true;
+    });
+  } else {
+    arr.forEach((todo) => {
+      todo.complete = false;
+    });
+  }
+  createElement();
 }
