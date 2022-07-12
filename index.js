@@ -105,12 +105,9 @@ function counts() {
   return index;
 }
 function deleteElement(id) {
-  for (let i = arr.length; i--; ) {
-    if (arr[i].id === id) {
-      arr.splice(i, 1);
-    }
-  }
+  arr = arr.filter((elem) => elem.id !== id);
   document.querySelector(`#todo_${id}`).remove();
+  createElement();
 }
 function allCompletedElements() {
   if (arr.some((element) => element.complete === false)) {
@@ -123,4 +120,11 @@ function allCompletedElements() {
     });
   }
   createElement();
+}
+function clearCompletedElements() {
+  arr.forEach((todo) => {
+    if (todo.complete === true) {
+      deleteElement(todo.id);
+    }
+  });
 }
