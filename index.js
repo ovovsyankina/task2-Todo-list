@@ -29,6 +29,7 @@ function createElement() {
   });
   count.innerHTML = counts() + "  items left";
   console.log(arr);
+  filterElements();
 }
 
 document.querySelector("input").addEventListener("keydown", function (e) {
@@ -97,17 +98,15 @@ function completedElements() {
   });
 }
 function filterElements() {
-  if (filter === all) {
+  if (filter === "all") {
     allElements();
   }
-  if (filter === active) {
+  if (filter === "active") {
     activeElements();
   }
-  if (filter === completed) {
+  if (filter === "completed") {
     completedElements();
   }
-
-  createElement();
 }
 function counts() {
   let index = 0;
@@ -161,7 +160,7 @@ function changeElement(id) {
         todo.text = textInput.firstChild.value;
         textInput.innerHTML = this.value;
         if (input.value === "") {
-          deleteElement(todo.id);
+          deleteElement(id);
         }
       });
     }
