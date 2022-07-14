@@ -145,25 +145,7 @@ function clearCompletedElements() {
     localStor();
   });
 }
-// function changeElement(id) {
-//   let textInput = document.querySelector(`#todoText_${id}`);
-//   let input = document.querySelector(`#inputDop_${id}`);
-//   arr.forEach((todo) => {
-//     if (todo.id === id) {
-//       textInput.innerHTML = `<input type="text" class="todotext_edit" id="inputDop_${id}" value="${todo.text}"/>`;
 
-//       todo.text = textInput.firstChild.value;
-//     }
-//     var td = this;
-//     input.addEventListener("blur", function () {
-//       td.innerHTML = this.value;
-//       td.addEventListener("click", changeElement(id));
-//     });
-
-//     deleteElement(todo.id);
-//   });
-//   // createElement();
-// }
 function changeElement(id) {
   let textInput = document.querySelector(`#todoText_${id}`);
   console.log(textInput.firstChild);
@@ -178,26 +160,10 @@ function changeElement(id) {
       input.addEventListener("blur", function () {
         todo.text = textInput.firstChild.value;
         textInput.innerHTML = this.value;
+        if (input.value === "") {
+          deleteElement(todo.id);
+        }
       });
     }
   });
 }
-
-// let elem = document.querySelector(`#todoText_${id}`);
-// arr.forEach((todo) => {
-//   console.log(todo.id);
-//   // let id = elem.getAttribute("id");
-//   if (todo.id === id) {
-//     let input = document.createElement("input");
-//     input.value = elem.innerHTML;
-//     todo.text = input.value;
-
-//     input.addEventListener("blur", function () {
-//       elem.innerHTML = this.value;
-//       this.parentElement.removeChild(this); // удалим инпут
-//     });
-
-//     elem.parentElement.appendChild(input);
-//   }
-//   console.log(todo.text);
-// });
