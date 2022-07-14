@@ -5,6 +5,14 @@ let todoCheck = document.querySelector(".todo_checkbox");
 let textTask = document.querySelector(".textTask");
 let filter = "all";
 let count = document.querySelector(".count");
+
+function localStor() {
+  localStorage["arr"] = JSON.stringify(arr);
+}
+if (localStorage.getItem("arr")) {
+  arr = JSON.parse(localStorage.getItem("arr"));
+  createElement();
+}
 function createElement() {
   todoElem = "";
 
@@ -13,8 +21,10 @@ function createElement() {
     arr[i].id = id;
     todoElem += `<li class="todo"  id="todo_${id}" ><input type="checkbox" class="todo_checkbox" id="todoCheck_${id}" onchange="checkElement(${id})" ${
       todo.complete ? "checked" : ""
-    }><div class="textTask"  id="todoText_${id}">${todo.text}</div> 
-    <button class="todoDelite" onclick="deleteElement(${id})">X</button></li>`;
+    }><div class="textTask"  id="todoText_${id}" ondblclick="changeElement(${id}) ">${
+      todo.text
+    }</div> 
+    <button class="todoDelete" onclick="deleteElement(${id})">X</button></li>`;
     todoItems.innerHTML = todoElem;
   });
   count.innerHTML = counts() + "  items left";
@@ -36,6 +46,7 @@ function newElement() {
   if (inputText.value !== "") {
     arr.push(infoTodo);
     createElement();
+    localStor();
   }
 }
 
@@ -45,12 +56,14 @@ function checkElement(id) {
     arr.forEach((todo) => {
       if (todo.id === id) {
         todo.complete = true;
+        localStor();
       }
     });
   } else {
     arr.forEach((todo) => {
       if (todo.id === id) {
         todo.complete = false;
+        localStor();
       }
     });
   }
@@ -80,6 +93,7 @@ function completedElements() {
     if (todo.complete === false) {
       document.querySelector(`#todo_${todo.id}`).style.display = "none";
     }
+    localStor();
   });
 }
 function filterElements() {
@@ -108,6 +122,7 @@ function deleteElement(id) {
   arr = arr.filter((elem) => elem.id !== id);
   document.querySelector(`#todo_${id}`).remove();
   createElement();
+  localStor();
 }
 function allCompletedElements() {
   if (arr.some((element) => element.complete === false)) {
@@ -120,11 +135,69 @@ function allCompletedElements() {
     });
   }
   createElement();
+  localStor();
 }
 function clearCompletedElements() {
   arr.forEach((todo) => {
     if (todo.complete === true) {
       deleteElement(todo.id);
     }
+    localStor();
   });
 }
+// function changeElement(id) {
+//   let textInput = document.querySelector(`#todoText_${id}`);
+//   let input = document.querySelector(`#inputDop_${id}`);
+//   arr.forEach((todo) => {
+//     if (todo.id === id) {
+//       textInput.innerHTML = `<input type="text" class="todotext_edit" id="inputDop_${id}" value="${todo.text}"/>`;
+
+//       todo.text = textInput.firstChild.value;
+//     }
+//     var td = this;
+//     input.addEventListener("blur", function () {
+//       td.innerHTML = this.value;
+//       td.addEventListener("click", changeElement(id));
+//     });
+
+//     deleteElement(todo.id);
+//   });
+//   // createElement();
+// }
+function changeElement(id) {
+  let textInput = document.querySelector(`#todoText_${id}`);
+  console.log(textInput.firstChild);
+  let todoLi = document.querySelector(".todo");
+  console.log(todoLi.childNodes[1]); //DIV
+
+  arr.forEach((todo) => {
+    if (todo.id === id) {
+      textInput.innerHTML = `<input type="text" id="inputDop_${todo.id}" value="${todo.text}"/>`;
+      let input = document.querySelector(`#inputDop_${todo.id}`);
+
+      input.addEventListener("blur", function () {
+        todo.text = textInput.firstChild.value;
+        textInput.innerHTML = this.value;
+      });
+    }
+  });
+}
+
+// let elem = document.querySelector(`#todoText_${id}`);
+// arr.forEach((todo) => {
+//   console.log(todo.id);
+//   // let id = elem.getAttribute("id");
+//   if (todo.id === id) {
+//     let input = document.createElement("input");
+//     input.value = elem.innerHTML;
+//     todo.text = input.value;
+
+//     input.addEventListener("blur", function () {
+//       elem.innerHTML = this.value;
+//       this.parentElement.removeChild(this); // удалим инпут
+//     });
+
+//     elem.parentElement.appendChild(input);
+//   }
+//   console.log(todo.text);
+// });

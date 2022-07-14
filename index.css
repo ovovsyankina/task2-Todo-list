@@ -11,3 +11,6 @@
   text-decoration: line-through;
   color: gray;
 }
+.todoDelete {
+  margin-left: 60px;
+}
