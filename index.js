@@ -33,7 +33,7 @@ function createElement() {
 }
 
 document.querySelector("input").addEventListener("keydown", function (e) {
-  if (e.keyCode === 13 && inputText.value !== "") {
+  if (e.keyCode === 13) {
     newElement();
     inputText.value = "";
   }
@@ -158,6 +158,18 @@ function changeElement(id) {
       let input = document.querySelector(`#inputDop_${todo.id}`);
       input.focus();
       input.selectionStart = input.value.length;
+
+      input.addEventListener("keydown", function (e) {
+        if (e.keyCode === 13) {
+          todo.text = textInput.firstChild.value;
+
+          textInput.innerHTML = this.value;
+        }
+        if (input.value === "") {
+          deleteElement(id);
+        }
+      });
+
       input.addEventListener("focusout", function () {
         todo.text = textInput.firstChild.value;
 
