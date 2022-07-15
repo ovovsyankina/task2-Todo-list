@@ -33,7 +33,7 @@ function createElement() {
 }
 
 document.querySelector("input").addEventListener("keydown", function (e) {
-  if (e.keyCode === 13) {
+  if (e.keyCode === 13 && inputText.value !== "") {
     newElement();
     inputText.value = "";
   }
@@ -44,7 +44,7 @@ function newElement() {
     id: 1,
     complete: false,
   };
-  if (inputText.value !== "") {
+  if (inputText.value.trim().length !== 0) {
     arr.push(infoTodo);
     createElement();
     localStor();
@@ -154,10 +154,13 @@ function changeElement(id) {
   arr.forEach((todo) => {
     if (todo.id === id) {
       textInput.innerHTML = `<input type="text" id="inputDop_${todo.id}" value="${todo.text}"/>`;
-      let input = document.querySelector(`#inputDop_${todo.id}`);
 
-      input.addEventListener("blur", function () {
+      let input = document.querySelector(`#inputDop_${todo.id}`);
+      input.focus();
+      input.selectionStart = input.value.length;
+      input.addEventListener("focusout", function () {
         todo.text = textInput.firstChild.value;
+
         textInput.innerHTML = this.value;
         if (input.value === "") {
           deleteElement(id);
