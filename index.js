@@ -31,7 +31,7 @@ function createElement() {
     todoItems.innerHTML = todoElem;
   });
   count.innerHTML = counts() + "  items left";
-  console.log(arr);
+
   filterElements();
 }
 
@@ -172,12 +172,12 @@ function changeElement(id) {
 
       input.addEventListener("keydown", function (e) {
         if (e.keyCode === 13) {
+          todo.text = textInput.firstChild.value;
+          textInput.innerHTML = textInput.firstChild.value;
+          localStor();
+          createElement();
           if (input.value === "") {
             deleteElement(id);
-          } else {
-            todo.text = textInput.firstChild.value;
-            localStor();
-            createElement();
           }
         }
       });
@@ -187,7 +187,6 @@ function changeElement(id) {
           deleteElement(id);
         } else {
           todo.text = textInput.firstChild.value;
-          textInput.innerHTML = textInput.firstChild.value;
           localStor();
           createElement();
         }
