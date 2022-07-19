@@ -30,7 +30,11 @@ function createElement() {
     <button class="todoDelete" onclick="deleteElement(${id})"></button></li>`;
     todoItems.innerHTML = todoElem;
   });
-  count.innerHTML = counts() + "  items left";
+  if (counts() === 1) {
+    count.innerHTML = counts() + "  item left";
+  } else {
+    count.innerHTML = counts() + "  items left";
+  }
 
   filterElements();
 }
@@ -164,16 +168,17 @@ function changeElement(id) {
 
   arr.forEach((todo) => {
     if (todo.id === id) {
-      textInput.innerHTML = `<input type="text" class="inputDop_class" id="inputDop_${todo.id}" value="${todo.text}"/>`;
+      textInput.innerHTML = `<input type="text" class="inputDop_class" id="inputDop_${id}" value="${todo.text}"/>`;
 
-      let input = document.querySelector(`#inputDop_${todo.id}`);
+      let input = textInput.firstChild;
+
       input.focus();
       input.selectionStart = input.value.length;
 
-      input.addEventListener("keydown", function (e) {
+      input.addEventListener("keypress", function (e) {
         if (e.keyCode === 13) {
           todo.text = textInput.firstChild.value;
-          textInput.innerHTML = textInput.firstChild.value;
+          textInput.innerHTML = this.value;
           localStor();
           createElement();
           if (input.value === "") {
