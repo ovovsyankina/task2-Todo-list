@@ -1,6 +1,7 @@
 let arr = [];
 let todoItems = document.querySelector(".list_items");
 let inputText = document.querySelector(".input_text");
+
 let todoCheck = document.querySelector(".todo_checkbox");
 let textTask = document.querySelector(".textTask");
 let filter = "all";
@@ -36,7 +37,11 @@ function createElement() {
     count.innerHTML = counts() + "  items left";
   }
 
+  console.log(arr);
   filterElements();
+}
+function isPositive(todo) {
+  return todo.checked === true;
 }
 
 document.querySelector("input").addEventListener("keydown", function (e) {
@@ -81,9 +86,23 @@ function checkElement(id) {
 
 function allElements() {
   filter = "all";
+  if (counts() === 0 && filter === "all") {
+    document.querySelector(".noActive_task").style.display = "none";
+  }
+  if (counts() === arr.length && filter === "all") {
+    document.querySelector(".noComplete_task").style.display = "none";
+  }
+
+  if (arr.length === 0 && filter === "all") {
+    document.querySelector(".noAll_task").style.display = "flex";
+  } else {
+    document.querySelector(".noAll_task").style.display = "none";
+  }
+
   arr.forEach((todo) => {
     document.querySelector(`#todo_${todo.id}`).style.display = "flex";
   });
+
   active.className = "active_filter ";
   complete.className = "completed_filter ";
   all.className = "all_filter active_button";
@@ -92,11 +111,17 @@ function allElements() {
 function activeElements() {
   allElements();
   filter = "active";
+  if (counts() === 0 && filter === "active" && arr.length !== 0) {
+    document.querySelector(".noActive_task").style.display = "flex";
+  } else {
+    document.querySelector(".noActive_task").style.display = "none";
+  }
   arr.forEach((todo) => {
     if (todo.complete === true) {
       document.querySelector(`#todo_${todo.id}`).style.display = "none";
     }
   });
+
   active.className = "active_filter active_button";
   complete.className = "completed_filter ";
   all.className = "all_filter ";
@@ -104,12 +129,15 @@ function activeElements() {
 function completedElements() {
   allElements();
   filter = "completed";
+  if (counts() === arr.length && filter === "completed" && arr.length !== 0) {
+    document.querySelector(".noComplete_task").style.display = "flex";
+  }
   arr.forEach((todo) => {
     if (todo.complete === false) {
       document.querySelector(`#todo_${todo.id}`).style.display = "none";
     }
-    localStor();
   });
+
   active.className = "active_filter ";
   complete.className = "completed_filter active_button";
   all.className = "all_filter ";

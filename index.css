@@ -19,10 +19,10 @@
   position: absolute;
   width: 100%;
   height: 100%;
+  min-height: 100vh;
   z-index: -1;
   opacity: 0.5;
   background-image: url(./img/fon.jpg);
-  background-position: center center;
 }
 .todo {
   display: flex;
@@ -160,6 +160,7 @@
   font-size: 20px;
   margin-left: 20px;
   width: 30px;
+  min-width: 30px;
   background-image: url(./img/close_111152.svg);
   background-position: center;
   background-color: white;
@@ -173,7 +174,7 @@
 }
 .textTask {
   font-family: sans-serif;
-  width: 90%;
+  width: calc(100% - 103px);
   border-bottom: 3px solid black;
   word-wrap: break-word;
 }
@@ -224,11 +225,32 @@
 ::placeholder {
   opacity: 0.3;
 }
+.noActive_task {
+  display: none;
+}
+.noComplete_task {
+  display: none;
+}
+.noAll_task {
+  display: none;
+}
+.style_alert {
+  position: absolute;
+  font-family: mon;
+  height: 30px;
+  width: 1140px;
+  align-items: center;
+
+  justify-content: center;
+}
 @media screen and (max-width: 1250px) {
   .filter_main,
   .inputField,
   .list_todo {
     width: 90%;
+  }
+  .style_alert {
+    width: calc(90% - 60px);
   }
 }
 @media screen and (max-width: 900px) {
@@ -244,11 +266,7 @@
     flex-wrap: wrap;
   }
 }
-@media screen and (max-width: 800px) {
-  .textTask {
-    width: 82%;
-  }
-}
+
 @media screen and (max-width: 700px) {
   .filter {
     width: 94%;
@@ -273,9 +291,13 @@
   .list_todo {
     padding: 10px 10px 40px 10px;
   }
-  /* .textTask {
-    width: 73%;
-  } */
+  .style_alert {
+    width: calc(95% - 20px);
+    font-size: 20px;
+  }
+  .textTask {
+    width: calc(100% - 95px);
+  }
   .todoDelete {
     background-size: 120%;
   }
@@ -288,14 +310,14 @@
   }
   .head {
     font-size: 60px;
-    letter-spacing: 3px;
+    letter-spacing: 0px;
   }
   .list_todo {
     font-size: 25px;
   }
   .input_text {
     font-size: 25px;
-    padding: 5px 20px 5px 80px;
+    padding: 5px 20px 5px 70px;
   }
   .allCompleted::before {
     font-size: 30px;
