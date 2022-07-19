@@ -5,7 +5,9 @@ let todoCheck = document.querySelector(".todo_checkbox");
 let textTask = document.querySelector(".textTask");
 let filter = "all";
 let count = document.querySelector(".count");
-
+let active = document.querySelector(".active_filter");
+let all = document.querySelector(".all_filter");
+let complete = document.querySelector(".completed_filter");
 function localStor() {
   localStorage["arr"] = JSON.stringify(arr);
 }
@@ -13,6 +15,7 @@ if (localStorage.getItem("arr")) {
   arr = JSON.parse(localStorage.getItem("arr"));
   createElement();
 }
+
 function createElement() {
   todoElem = "";
 
@@ -21,10 +24,10 @@ function createElement() {
     arr[i].id = id;
     todoElem += `<li class="todo"  id="todo_${id}" ><input type="checkbox" class="todo_checkbox" id="todoCheck_${id}" onchange="checkElement(${id})" ${
       todo.complete ? "checked" : ""
-    }><div class="textTask"  id="todoText_${id}" ondblclick="changeElement(${id}) ">${
+    }><label class="label_textTask" for="todoCheck_${id}"> </label><div class="textTask"  id="todoText_${id}" ondblclick="changeElement(${id}) ">${
       todo.text
-    }</div> 
-    <button class="todoDelete" onclick="deleteElement(${id})">X</button></li>`;
+    }</div>
+    <button class="todoDelete" onclick="deleteElement(${id})"></button></li>`;
     todoItems.innerHTML = todoElem;
   });
   count.innerHTML = counts() + "  items left";
@@ -71,11 +74,15 @@ function checkElement(id) {
 
   createElement();
 }
+
 function allElements() {
   filter = "all";
   arr.forEach((todo) => {
     document.querySelector(`#todo_${todo.id}`).style.display = "flex";
   });
+  active.className = "active_filter ";
+  complete.className = "completed_filter ";
+  all.className = "all_filter active_button";
 }
 
 function activeElements() {
@@ -86,6 +93,9 @@ function activeElements() {
       document.querySelector(`#todo_${todo.id}`).style.display = "none";
     }
   });
+  active.className = "active_filter active_button";
+  complete.className = "completed_filter ";
+  all.className = "all_filter ";
 }
 function completedElements() {
   allElements();
@@ -96,7 +106,11 @@ function completedElements() {
     }
     localStor();
   });
+  active.className = "active_filter ";
+  complete.className = "completed_filter active_button";
+  all.className = "all_filter ";
 }
+
 function filterElements() {
   if (filter === "all") {
     allElements();
@@ -147,13 +161,10 @@ function clearCompletedElements() {
 
 function changeElement(id) {
   let textInput = document.querySelector(`#todoText_${id}`);
-  console.log(textInput.firstChild);
-  let todoLi = document.querySelector(".todo");
-  console.log(todoLi.childNodes[1]); //DIV
 
   arr.forEach((todo) => {
     if (todo.id === id) {
-      textInput.innerHTML = `<input type="text" id="inputDop_${todo.id}" value="${todo.text}"/>`;
+      textInput.innerHTML = `<input type="text" class="inputDop_class" id="inputDop_${todo.id}" value="${todo.text}"/>`;
 
       let input = document.querySelector(`#inputDop_${todo.id}`);
       input.focus();
@@ -161,21 +172,24 @@ function changeElement(id) {
 
       input.addEventListener("keydown", function (e) {
         if (e.keyCode === 13) {
-          todo.text = textInput.firstChild.value;
-
-          textInput.innerHTML = this.value;
-        }
-        if (input.value === "") {
-          deleteElement(id);
+          if (input.value === "") {
+            deleteElement(id);
+          } else {
+            todo.text = textInput.firstChild.value;
+            localStor();
+            createElement();
+          }
         }
       });
 
       input.addEventListener("focusout", function () {
-        todo.text = textInput.firstChild.value;
-
-        textInput.innerHTML = this.value;
         if (input.value === "") {
           deleteElement(id);
+        } else {
+          todo.text = textInput.firstChild.value;
+          textInput.innerHTML = textInput.firstChild.value;
+          localStor();
+          createElement();
         }
       });
     }

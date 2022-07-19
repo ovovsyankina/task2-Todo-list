@@ -8,25 +8,54 @@
     <link rel="stylesheet" href="./index.css" />
   </head>
   <body>
-    <div class="head">TODO LIST</div>
-    <div class="inputField">
-      <input type="text" class="input_text" />
-      <ul class="list_items"></ul>
-    </div>
-    <div class="count"></div>
-    <div class="filter">
-      <button class="all_filter" onclick="allElements()">All</button>
-      <button class="active_filter" onclick="activeElements()">Active</button>
-      <button class="completed_filter" onclick="completedElements()">
-        Completed
-      </button>
+    <div class="wrapper">
+      <div class="fon"></div>
+      <header class="header">
+        <div class="head">TODO LIST</div>
 
-      <button class="allCompleted" onclick="allCompletedElements()">
-        All Completed
-      </button>
-      <button class="clearCompleted" onclick="clearCompletedElements()">
-        Clear Completed
-      </button>
+        <div class="inputField">
+          <label class="allCompleted" onclick="allCompletedElements()"></label>
+          <input
+            type="text"
+            class="input_text"
+            placeholder="What needs to be done?"
+          />
+        </div>
+      </header>
+      <main class="main">
+        <div class="filter_main">
+          <div class="filter">
+            <button class="all_filter style_button" onclick="allElements()">
+              All
+            </button>
+
+            <button
+              class="active_filter style_button"
+              onclick="activeElements()"
+            >
+              Active
+            </button>
+
+            <button
+              class="completed_filter style_button"
+              onclick="completedElements()"
+            >
+              Completed
+            </button>
+
+            <button
+              class="clearCompleted style_button"
+              onclick="clearCompletedElements()"
+            >
+              Clear Completed
+            </button>
+            <div class="count style_button"></div>
+          </div>
+        </div>
+        <div class="list_todo">
+          <ul class="list_items"></ul>
+        </div>
+      </main>
     </div>
   </body>
   <script src="./index.js"></script>
