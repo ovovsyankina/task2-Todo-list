@@ -66,8 +66,9 @@
   font-size: 30px;
   padding: 5px 60px 5px 100px;
 }
-.input_text:focus {
-  border-color: black;
+.input_text:focus,
+.input_text:active {
+  border: 3px solid black;
 }
 .allCompleted {
   position: absolute;

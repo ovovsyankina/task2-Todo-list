@@ -37,7 +37,6 @@ function createElement() {
     count.innerHTML = counts() + "  items left";
   }
 
-  console.log(arr);
   filterElements();
 }
 function isPositive(todo) {
