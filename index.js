@@ -51,7 +51,7 @@ document.querySelector("input").addEventListener("keydown", function (e) {
 });
 function newElement() {
   let infoTodo = {
-    text: inputText.value,
+    text: inputText.value.trim().replace(/\s/g, "&nbsp;"),
     id: 1,
     complete: false,
   };
@@ -201,29 +201,28 @@ function changeElement(id) {
       textInput.innerHTML = `<input type="text" class="inputDop_class" id="inputDop_${id}" value="${todo.text}"/>`;
 
       let input = textInput.firstChild;
-
       input.focus();
       input.selectionStart = input.value.length;
 
-      input.addEventListener("keypress", function (e) {
-        if (e.keyCode === 13) {
-          todo.text = textInput.firstChild.value;
-          textInput.innerHTML = this.value;
-          localStor();
+      input.addEventListener("focusout", function () {
+        if (input.value.trim().length !== 0) {
+          todo.text = textInput.firstChild.value
+            .trim()
+            .replace(/\s/g, "&nbsp;");
           createElement();
-          if (input.value === "") {
-            deleteElement(id);
-          }
+          localStor();
+        } else {
+          deleteElement(id);
         }
       });
-
-      input.addEventListener("focusout", function () {
-        if (input.value === "") {
-          deleteElement(id);
-        } else {
-          todo.text = textInput.firstChild.value;
-          localStor();
+      input.addEventListener("keypress", function (e) {
+        if (e.keyCode === 13) {
+          todo.text = textInput.firstChild.value
+            .trim()
+            .replace(/\s/g, "&nbsp;");
+          textInput.innerHTML = this.value;
           createElement();
+          localStor();
         }
       });
     }
