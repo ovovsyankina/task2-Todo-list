@@ -69,6 +69,7 @@
 .input_text:focus,
 .input_text:active {
   border: 3px solid black;
+  outline: none;
 }
 .allCompleted {
   position: absolute;
