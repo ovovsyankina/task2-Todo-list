@@ -131,6 +131,8 @@ function completedElements() {
   filter = "completed";
   if (counts() === arr.length && filter === "completed" && arr.length !== 0) {
     document.querySelector(".noComplete_task").style.display = "flex";
+  } else {
+    document.querySelector(".noComplete_task").style.display = "none";
   }
   arr.forEach((todo) => {
     if (todo.complete === false) {
@@ -179,6 +181,7 @@ function allCompletedElements() {
       todo.complete = false;
     });
   }
+
   createElement();
   localStor();
 }
