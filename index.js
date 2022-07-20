@@ -9,14 +9,22 @@ let count = document.querySelector(".count");
 let active = document.querySelector(".active_filter");
 let all = document.querySelector(".all_filter");
 let complete = document.querySelector(".completed_filter");
+const filterStor = JSON.parse(localStorage.getItem("filter"));
+const arrStor = JSON.parse(localStorage.getItem("arr"));
+
 function localStor() {
   localStorage["arr"] = JSON.stringify(arr);
-}
-if (localStorage.getItem("arr")) {
-  arr = JSON.parse(localStorage.getItem("arr"));
-  createElement();
+  localStorage["filter"] = JSON.stringify(filter);
 }
 
+if (arrStor) {
+  arr = arrStor;
+  createElement();
+}
+if (filterStor) {
+  filter = filterStor;
+  filterElements();
+}
 function createElement() {
   todoElem = "";
 
@@ -25,9 +33,9 @@ function createElement() {
     arr[i].id = id;
     todoElem += `<li class="todo"  id="todo_${id}" ><input type="checkbox" class="todo_checkbox" id="todoCheck_${id}" onchange="checkElement(${id})" ${
       todo.complete ? "checked" : ""
-    }><label class="label_textTask" for="todoCheck_${id}"> </label><div class="textTask"  id="todoText_${id}" ondblclick="changeElement(${id}) ">${
+    }><label class="label_textTask" for="todoCheck_${id}"> </label><div class="textTask"  id="todoText_${id}" ondblclick="changeElement(${id}) "><span>${
       todo.text
-    }</div>
+    }</span></div>
     <button class="todoDelete" onclick="deleteElement(${id})"></button></li>`;
     todoItems.innerHTML = todoElem;
   });
@@ -101,7 +109,7 @@ function allElements() {
   arr.forEach((todo) => {
     document.querySelector(`#todo_${todo.id}`).style.display = "flex";
   });
-
+  localStor();
   active.className = "active_filter ";
   complete.className = "completed_filter ";
   all.className = "all_filter active_button";
@@ -120,7 +128,7 @@ function activeElements() {
       document.querySelector(`#todo_${todo.id}`).style.display = "none";
     }
   });
-
+  localStor();
   active.className = "active_filter active_button";
   complete.className = "completed_filter ";
   all.className = "all_filter ";
@@ -138,7 +146,7 @@ function completedElements() {
       document.querySelector(`#todo_${todo.id}`).style.display = "none";
     }
   });
-
+  localStor();
   active.className = "active_filter ";
   complete.className = "completed_filter active_button";
   all.className = "all_filter ";
@@ -147,11 +155,9 @@ function completedElements() {
 function filterElements() {
   if (filter === "all") {
     allElements();
-  }
-  if (filter === "active") {
+  } else if (filter === "active") {
     activeElements();
-  }
-  if (filter === "completed") {
+  } else if (filter === "completed") {
     completedElements();
   }
 }
