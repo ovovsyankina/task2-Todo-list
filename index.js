@@ -9,6 +9,11 @@ let count = document.querySelector(".count");
 let active = document.querySelector(".active_filter");
 let all = document.querySelector(".all_filter");
 let complete = document.querySelector(".completed_filter");
+
+let noActiveTask = document.querySelector(".noActive_task");
+let noCompleteTask = document.querySelector(".noComplete_task");
+let noAllTask = document.querySelector(".noAll_task");
+
 const filterStor = JSON.parse(localStorage.getItem("filter"));
 const arrStor = JSON.parse(localStorage.getItem("arr"));
 
@@ -31,7 +36,7 @@ function createElement() {
   arr.forEach((todo, i) => {
     let id = i + new Date().getTime();
     arr[i].id = id;
-    todoElem += `<li class="todo"  id="todo_${id}" ><input type="checkbox" class="todo_checkbox" id="todoCheck_${id}" onchange="checkElement(${id})" ${
+    todoElem += `<li class="todo styleTodo_flex"  id="todo_${id}" ><input type="checkbox" class="todo_checkbox" id="todoCheck_${id}" onchange="checkElement(${id})" ${
       todo.complete ? "checked" : ""
     }><label class="label_textTask" for="todoCheck_${id}"> </label><div class="textTask"  id="todoText_${id}" ondblclick="changeElement(${id}) "><span>${
       todo.text
@@ -94,20 +99,24 @@ function checkElement(id) {
 function allElements() {
   filter = "all";
   if (counts() === 0 && filter === "all") {
-    document.querySelector(".noActive_task").style.display = "none";
+    noActiveTask.classList.remove("style_flex");
+    noActiveTask.classList.add("style_none");
   }
   if (counts() === arr.length && filter === "all") {
-    document.querySelector(".noComplete_task").style.display = "none";
+    noCompleteTask.classList.remove("style_flex");
+    noCompleteTask.classList.add("style_none");
   }
 
   if (arr.length === 0 && filter === "all") {
-    document.querySelector(".noAll_task").style.display = "flex";
+    noAllTask.classList.remove("style_none");
+    noAllTask.classList.add("style_flex");
   } else {
-    document.querySelector(".noAll_task").style.display = "none";
+    noAllTask.classList.remove("style_flex");
+    noAllTask.classList.add("style_none");
   }
 
   arr.forEach((todo) => {
-    document.querySelector(`#todo_${todo.id}`).style.display = "flex";
+    document.querySelector(`#todo_${todo.id}`).classList.add("styleTodo_flex");
   });
   localStor();
   active.className = "active_filter ";
@@ -119,13 +128,27 @@ function activeElements() {
   allElements();
   filter = "active";
   if (counts() === 0 && filter === "active" && arr.length !== 0) {
-    document.querySelector(".noActive_task").style.display = "flex";
+    noActiveTask.classList.remove("style_none");
+    noActiveTask.classList.add("style_flex");
   } else {
-    document.querySelector(".noActive_task").style.display = "none";
+    noActiveTask.classList.remove("style_flex");
+    noActiveTask.classList.add("style_none");
   }
   arr.forEach((todo) => {
-    if (todo.complete === true) {
-      document.querySelector(`#todo_${todo.id}`).style.display = "none";
+    if (todo.complete === true && filter === "active") {
+      document
+        .querySelector(`#todo_${todo.id}`)
+        .classList.add("styleTodo_none");
+      document
+        .querySelector(`#todo_${todo.id}`)
+        .classList.remove("styleTodo_flex");
+    } else {
+      document
+        .querySelector(`#todo_${todo.id}`)
+        .classList.remove("styleTodo_none");
+      document
+        .querySelector(`#todo_${todo.id}`)
+        .classList.add("styleTodo_flex");
     }
   });
   localStor();
@@ -137,13 +160,27 @@ function completedElements() {
   allElements();
   filter = "completed";
   if (counts() === arr.length && filter === "completed" && arr.length !== 0) {
-    document.querySelector(".noComplete_task").style.display = "flex";
+    noCompleteTask.classList.remove("style_none");
+    noCompleteTask.classList.add("style_flex");
   } else {
-    document.querySelector(".noComplete_task").style.display = "none";
+    noCompleteTask.classList.remove("style_flex");
+    noCompleteTask.classList.add("style_none");
   }
   arr.forEach((todo) => {
     if (todo.complete === false) {
-      document.querySelector(`#todo_${todo.id}`).style.display = "none";
+      document
+        .querySelector(`#todo_${todo.id}`)
+        .classList.add("styleTodo_none");
+      document
+        .querySelector(`#todo_${todo.id}`)
+        .classList.remove("styleTodo_flex");
+    } else {
+      document
+        .querySelector(`#todo_${todo.id}`)
+        .classList.remove("styleTodo_none");
+      document
+        .querySelector(`#todo_${todo.id}`)
+        .classList.add("styleTodo_flex");
     }
   });
   localStor();

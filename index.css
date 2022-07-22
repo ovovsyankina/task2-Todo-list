@@ -11,6 +11,14 @@
   font-family: "mon";
   src: url(./font/Montserrat-Medium.ttf);
 }
+.style_none,
+.styleTodo_none {
+  display: none;
+}
+.style_flex,
+.styleTodo_flex {
+  display: flex;
+}
 .wrapper {
   position: relative;
   width: 100%;
@@ -25,7 +33,6 @@
   background-image: url(./img/fon.jpg);
 }
 .todo {
-  display: flex;
   justify-content: space-between;
   width: 100%;
 
@@ -227,15 +234,7 @@
 ::placeholder {
   opacity: 0.3;
 }
-.noActive_task {
-  display: none;
-}
-.noComplete_task {
-  display: none;
-}
-.noAll_task {
-  display: none;
-}
+
 .style_alert {
   position: absolute;
   font-family: mon;
