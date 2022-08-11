@@ -192,7 +192,7 @@
 }
 .textTask {
   font-family: sans-serif;
-  width: calc(100% - 103px);
+  width: calc(100% - 130px);
   border-bottom: 3px solid black;
   word-wrap: break-word;
 }
@@ -320,7 +320,7 @@
     font-size: 20px;
   }
   .textTask {
-    width: calc(100% - 95px);
+    width: calc(100% - 110px);
   }
   .todoDelete {
     background-size: 120%;
